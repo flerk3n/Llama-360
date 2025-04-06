@@ -1,8 +1,8 @@
 function ContactCard() {
   const contactInfo = {
-    email: 'contact@llama360.com',
-    github: 'github.com/llama360',
-    linkedin: 'linkedin.com/company/llama360'
+    email: 'harshrj.dev@gmail.com',
+    github: 'github.com/flerk3n/Llama-360',
+    linkedin: 'linkedin.com/in/flerk3n'
   }
 
   return (
