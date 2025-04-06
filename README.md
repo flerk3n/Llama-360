@@ -1,5 +1,8 @@
 # Llama 360 Banking Data Product Builder
 
+
+live at : https://llama-360.vercel.app/
+
 Llama 360 is a modern web application featuring a dark theme with glassmorphism effects, designed for retail banking data product generation. It provides an intuitive interface for:
 
 1. Describing banking business use cases in natural language
