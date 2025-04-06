@@ -6,6 +6,10 @@ import os
 import time
 import logging
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Set up logging
 logging.basicConfig(
@@ -35,7 +39,13 @@ except ImportError as e:
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
-logger.info("Initialized Flask app with CORS support")
+
+# Get configuration from environment variables
+app.secret_key = os.getenv('FLASK_SECRET_KEY', 'development_secret_key')
+app.config['ENV'] = os.getenv('FLASK_ENV', 'development')
+OLLAMA_API_URL = os.getenv('OLLAMA_API_URL', 'http://localhost:11434/api')
+
+logger.info(f"Initialized Flask app with CORS support in {app.config['ENV']} mode")
 
 # Define Ollama models to use
 REQUIRED_MODELS = ["gemma:2b", "phi3:mini"]

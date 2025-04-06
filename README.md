@@ -221,3 +221,88 @@ The Python Flask backend provides API endpoints for data processing:
 - Clear browser cache and reload
 - Check console for any JavaScript errors
 - Ensure all required assets are loading correctly 
+
+## Environment Variables & Security
+
+The project uses environment variables to securely manage sensitive configuration like API keys and secrets. This approach keeps private information out of version control.
+
+### Frontend Environment Variables
+
+For the React frontend, Vite uses the `.env` file format with the `VITE_` prefix for all environment variables that should be exposed to the client-side code.
+
+1. Copy the example file to create your own:
+```bash
+cd llama-web
+cp .env.example .env
+```
+
+2. Edit the `.env` file to add your own Firebase and Google API credentials.
+
+3. Variables used in the frontend (`llama-web/.env`):
+```bash
+# Required for Firebase Authentication
+VITE_FIREBASE_API_KEY=your_firebase_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your-project-id.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your-project-id
+VITE_FIREBASE_STORAGE_BUCKET=your-project-id.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+
+# Required for Google API integration
+VITE_GOOGLE_CLIENT_ID=your_google_client_id
+VITE_GOOGLE_API_KEY=your_google_api_key
+
+# Backend API URL
+VITE_API_URL=http://localhost:5000/api
+```
+
+### Backend Environment Variables
+
+For the Flask backend, create a `.env` file in the root directory:
+
+1. Copy the example file:
+```bash
+cp .env.example .env
+```
+
+2. Edit with your own values:
+```
+# Flask configuration
+FLASK_SECRET_KEY=your_random_secure_key
+FLASK_ENV=development
+
+# Ollama configuration
+OLLAMA_API_URL=http://localhost:11434/api
+```
+
+### Environment Variable Usage
+
+The project accesses these environment variables in the following ways:
+
+1. **Frontend (React/Vite)**: 
+   - Environment variables are accessed via `import.meta.env.VITE_VARIABLE_NAME`
+   - Located in `src/auth/firebaseConfig.js` for Firebase configuration
+
+2. **Backend (Flask)**:
+   - Environment variables are loaded using python-dotenv
+   - Accessed via `os.getenv('VARIABLE_NAME', 'default_value')`
+   - Located in `web.py` for Flask configuration
+
+### Security Best Practices
+
+1. **Never commit `.env` files to version control**
+   - The `.gitignore` file is configured to exclude `.env` files
+   - Only commit `.env.example` files with placeholder values
+
+2. **Use environment-specific variables**
+   - Development: `.env.development` 
+   - Production: `.env.production`
+
+3. **Rotate API keys regularly**
+   - Update keys if you suspect they've been compromised
+   - Avoid using production keys in development environments
+
+4. **Restrict API key usage**
+   - Set up proper API restrictions in Google Cloud Console
+   - Configure Firebase Security Rules
+   - Use API key restrictions by HTTP referrer 
