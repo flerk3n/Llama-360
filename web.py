@@ -38,14 +38,17 @@ except ImportError as e:
 
 # Initialize Flask app
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
 
 # Get configuration from environment variables
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'development_secret_key')
 app.config['ENV'] = os.getenv('FLASK_ENV', 'development')
 OLLAMA_API_URL = os.getenv('OLLAMA_API_URL', 'http://localhost:11434/api')
 
-logger.info(f"Initialized Flask app with CORS support in {app.config['ENV']} mode")
+# Configure CORS with allowed origins from environment
+allowed_origins = os.getenv('ALLOWED_ORIGINS', 'http://localhost:3000').split(',')
+CORS(app, origins=allowed_origins)  # Enable CORS only for specified origins
+
+logger.info(f"Initialized Flask app with CORS support for {allowed_origins} in {app.config['ENV']} mode")
 
 # Define Ollama models to use
 REQUIRED_MODELS = ["gemma:2b", "phi3:mini"]

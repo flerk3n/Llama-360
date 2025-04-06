@@ -1,21 +1,23 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
+// Load environment variables using Vite's import.meta.env
+// All Vite environment variables must be prefixed with VITE_
 const firebaseConfig = {
-  apiKey: "AIzaSyCD_tHdC1IpE3x6mK8mwUdqet3hJGQZvC0",
-  authDomain: "llama-360.firebaseapp.com",
-  projectId: "llama-360",
-  storageBucket: "llama-360.appspot.com",
-  messagingSenderId: "1025388571393",
-  appId: "1:1025388571393:web:2d0bb5d87b3cd1c2aec900"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
-// Replace the above values with your actual Firebase credentials
-// For example:
-// apiKey: "AIzaSyC2abc123def456ghi789jkl",
-// authDomain: "your-project-id.firebaseapp.com",
-// etc.
+// Check for missing environment variables
+if (!firebaseConfig.apiKey || !firebaseConfig.authDomain || !firebaseConfig.projectId) {
+  console.error('Firebase configuration is incomplete. Please check your environment variables.');
+}
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();

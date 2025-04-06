@@ -1,3 +1,11 @@
+# Environment Variables - Never commit these!
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.*
+
 # Node.js / React Frontend
 node_modules/
 llama-web/node_modules/
@@ -38,14 +46,13 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-.env
-.venv
 
 # Firebase
 firebase-debug.log
 firebase-debug.*.log
 .firebaserc
 firebase.json
+.firebase/
 
 # IDE / Editors
 .idea/
