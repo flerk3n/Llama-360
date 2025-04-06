@@ -12,7 +12,9 @@ Llama 360 is a modern web application featuring a dark theme with glassmorphism 
 - **Dark Theme UI with Glassmorphism**: Modern, visually appealing interface with glass-like effects
 - **KYC Integration**: Support for Know Your Customer (KYC) use cases and compliance workflows
 - **Input Validation**: Smart validation of banking-related use cases with helpful suggestions
-- **Gemma 2B Integration**: AI-powered interpretation of banking use cases
+- **Dual LLM Architecture**: 
+  - **Gemma 2B**: Powers use case interpretation and analysis
+  - **Phi-3 Mini**: Handles field mapping and data processing tasks
 - **Multi-step workflow**: Intuitive step-by-step process for data product generation
 - **Google Authentication**: Secure sign-in with profile integration
 
@@ -65,8 +67,9 @@ Ensure Ollama is installed and the required models are available:
 
 ```bash
 # Install Ollama from https://ollama.com/
-# Pull the required models
-ollama pull gemma2:2b
+# Pull both required models
+ollama pull gemma2:2b    # Used for use case interpretation
+ollama pull phi3:mini    # Used for data mapping and processing
 ```
 
 ### 4. Start the Backend Server
@@ -193,9 +196,15 @@ The Python Flask backend provides API endpoints for data processing:
   - `/api/process`: Data processing for customer information
   - `/api/reports`: Report generation and export
 
-- **Integration**:
-  - Gemma 2B integration via Ollama for NLP tasks
-  - Report generation for various banking use cases
+- **Dual LLM Integration**:
+  - **Gemma 2B**: Primary model for natural language understanding
+    - Analyzes banking use cases to identify appropriate data products
+    - Provides reasoning and confidence scores for decisions
+    - Higher accuracy for domain-specific banking terminology
+  - **Phi-3 Mini**: Specialized model for data operations
+    - Maps source fields to target schemas
+    - Processes structured data for banking analysis
+    - Optimized for efficiency in data processing tasks
 
 ## Development Notes
 
@@ -273,6 +282,13 @@ FLASK_ENV=development
 
 # Ollama configuration
 OLLAMA_API_URL=http://localhost:11434/api
+
+# LLM Models configuration 
+GEMMA_MODEL=gemma2:2b
+PHI_MODEL=phi3:mini
+
+# Additional Backend Security
+ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
 ```
 
 ### Environment Variable Usage

@@ -44,14 +44,19 @@ app.secret_key = os.getenv('FLASK_SECRET_KEY', 'development_secret_key')
 app.config['ENV'] = os.getenv('FLASK_ENV', 'development')
 OLLAMA_API_URL = os.getenv('OLLAMA_API_URL', 'http://localhost:11434/api')
 
+# LLM model configuration
+GEMMA_MODEL = os.getenv('GEMMA_MODEL', 'gemma2:2b')
+PHI_MODEL = os.getenv('PHI_MODEL', 'phi3:mini')
+
 # Configure CORS with allowed origins from environment
 allowed_origins = os.getenv('ALLOWED_ORIGINS', 'http://localhost:3000').split(',')
 CORS(app, origins=allowed_origins)  # Enable CORS only for specified origins
 
 logger.info(f"Initialized Flask app with CORS support for {allowed_origins} in {app.config['ENV']} mode")
+logger.info(f"Using LLM models: GEMMA={GEMMA_MODEL}, PHI={PHI_MODEL}")
 
 # Define Ollama models to use
-REQUIRED_MODELS = ["gemma:2b", "phi3:mini"]
+REQUIRED_MODELS = [GEMMA_MODEL, PHI_MODEL]
 
 # Business rules for specific use cases
 BUSINESS_RULES = {
