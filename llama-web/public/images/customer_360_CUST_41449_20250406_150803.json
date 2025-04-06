@@ -1,0 +1,12 @@
+{
+  "data_product": "customer_360",
+  "customer_id": "CUST_41449",
+  "generated_at": "2025-04-06T15:08:03.839067",
+  "score": 0.4167595986140378,
+  "status": "pending",
+  "expiration": "2025-05-06T15:08:03.839096",
+  "model_used": "gemma:2b",
+  "kyc_status": "verified",
+  "risk_level": "high",
+  "verification_method": "document"
+}
